@@ -17,3 +17,13 @@ class Score(models.Model):
 
     class Meta:
         ordering = ['-final_score']
+
+    # Added to ensure validation occurs
+    def save(self, **kwargs):
+        self.clean()
+        return super(Score, self).save(**kwargs)
+
+    # Add validation to the score
+    def clean(self):
+        if self.final_score != (self.total_words - self.num_wrong_words - 3 * self.num_incorrect_start_words):
+            raise ValidationError({'final_score':'Invalid final score'})
