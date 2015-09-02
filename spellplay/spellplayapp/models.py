@@ -25,5 +25,5 @@ class Score(models.Model):
 
     # Add validation to the score
     def clean(self):
-        if self.final_score != (self.total_words - self.num_wrong_words - 3 * self.num_incorrect_start_words):
+        if self.final_score != (10 * self.total_words - 2 * self.num_wrong_words - 5 * self.num_incorrect_start_words):
             raise ValidationError({'final_score':'Invalid final score'})
